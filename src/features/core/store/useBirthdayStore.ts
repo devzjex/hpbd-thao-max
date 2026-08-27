@@ -39,6 +39,8 @@ export interface BirthdayConfig {
     showGiftSection?: boolean;
     /** Both share entry points: the action button and the footer link. */
     showShareSection?: boolean;
+    /** Full-screen firework burst on entering the landing page. */
+    showFireworks?: boolean;
     finalVideoUrl?: string;
     specialMemories?: {
         text: string;
@@ -193,6 +195,7 @@ const envShowVideo = parseEnvBoolean(import.meta.env.VITE_SHOW_VIDEO_SECTION, tr
 const envShowFinalSurprise = parseEnvBoolean(import.meta.env.VITE_SHOW_FINAL_SURPRISE, true);
 const envShowGift = parseEnvBoolean(import.meta.env.VITE_SHOW_GIFT_SECTION, true);
 const envShowShare = parseEnvBoolean(import.meta.env.VITE_SHOW_SHARE_SECTION, true);
+const envShowFireworks = parseEnvBoolean(import.meta.env.VITE_SHOW_FIREWORKS, true);
 const envShowSkipButton = parseEnvBoolean(import.meta.env.VITE_SHOW_SKIP_BUTTON, true);
 const envReducedMotion = import.meta.env.VITE_REDUCED_MOTION !== undefined
     ? parseEnvBoolean(import.meta.env.VITE_REDUCED_MOTION, false)
@@ -304,6 +307,7 @@ export const useBirthdayStore = create<BirthdayStore>((set, get) => ({
         showFinalSurprise: envShowFinalSurprise,
         showGiftSection: envShowGift,
         showShareSection: envShowShare,
+        showFireworks: envShowFireworks,
         showSkipButton: envShowSkipButton,
         reducedMotion: envReducedMotion,
         soundEffectsEnabled: urlOverrides.soundEffectsEnabled !== undefined ? urlOverrides.soundEffectsEnabled : envSoundEffects,

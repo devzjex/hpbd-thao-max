@@ -36,7 +36,7 @@ const Index = () => {
 
       {/* Lightweight ambient effects — reduced for performance */}
       <EmojiCursorTrail />
-      <PremiumFireworks runKey={fireworksRunKey}/>
+      {config.showFireworks !== false && <PremiumFireworks runKey={fireworksRunKey}/>}
       <FloatingElements />
 
       {/* Additional effects only in main phase to reduce initial load */}
