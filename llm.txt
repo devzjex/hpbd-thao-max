@@ -1,0 +1,104 @@
+# === BIRTHDAY BLOOM — AI & LLM INGESTION GUIDE ===
+
+This text document serves as a high-density, vector-embedding-friendly developer reference map for LLM coding agents (e.g., Gemini, Claude, GPT, Perplexity). It outlines the architecture, data layers, state machines, multi-language localization pipelines, SEO systems, and styling rules of the Birthday Bloom project.
+
+---
+
+## 🚀 1. SYSTEM OVERVIEW & MISSION
+To provide a premium (1%-tier) cinematic, interactive birthday landing page that non-developers can fully customize using URL query parameters or 53 environment variables (`.env.local` or hosting provider dashboards) without editing codebase files. Supports native localization in **English (en)**, **French (fr)**, **Hindi (hi)**, and **Bengali (bn)** with authentic cultural emotion, respectful Indic honorifics, French poetic elegance, and zero layout overflow.
+
+---
+
+## 🛠 2. TECH STACK & SPECIFICATIONS
+* **Framework:** React 18 / 19 (Concurrent Mode, client-side rendering)
+* **Language:** TypeScript 5.8 (Strict mode)
+* **Build System:** Vite 8 (Hot Module Replacement enabled, manual chunking)
+* **Styling:** Tailwind CSS 3.4 + Custom HSL CSS Custom Properties (for dynamic theme injection)
+* **Animation & 3D:** Framer Motion 12+ (physics-spring transitions) + Three.js + React Three Fiber + Drei + React Spring + HTML5 Canvas 2D
+* **Icons:** Lucide React
+* **State Management:** Zustand 5+ (centralized store parsing URL parameters and 53 env variables)
+* **SEO Engine:** Custom `useDynamicSEO` hook with reactive OpenGraph, Twitter Cards, Canonical links, and Schema.org JSON-LD structured data (WebSite, WebApplication, FAQPage, HowTo, BreadcrumbList, SocialEvent)
+* **Internationalization:** Custom lightweight type-safe i18n engine (`useTranslation()`, `TranslationSchema`)
+* **Testing:** Vitest 3+ (Unit, integration, stress, SEO & empirical challenge tests)
+
+---
+
+## 🌐 3. URL QUERY PARAMETER CUSTOMIZATION
+Birthday Bloom supports instantaneous URL customization for zero-code sharing:
+- `name`: Recipient's name (`?name=Sophia`)
+- `rel` / `relationship`: Archetype (`partner`, `friend`, `family`, `brother`, `sister`, `mother`, `father`, `daughter`, `son`, `mentor`, `colleague`, `crush`)
+- `lang` / `language`: Locale (`en`, `bn`, `hi`, `fr`)
+- `age`: Recipient's age (`?age=25`)
+- `sender` / `wisher`: Sender's name (`?sender=Alex`)
+- `msg` / `message`: Custom personal note (`?msg=Happy+Birthday!`)
+- `color`: Custom hex theme color (`?color=%23FF6B6B`)
+- `speed`: Pacing (`slow`, `moderate`, `fast`)
+- `sound`: Sound effects toggle (`true`/`false`)
+
+---
+
+## 🌍 4. INTERNATIONALIZATION & FONT RENDERING
+* **Hindi (hi):** Culturally authentic honorifics and poetic blessings. Standardized font typography using Noto Sans Devanagari.
+* **Bengali (bn):** Authentic Bengali idioms and warm poetic phrasing. Standardized font typography using Noto Sans Bengali.
+* **French (fr):** Poetic elegance and cultural resonance with proper accents.
+* **English (en):** Expressive modern storytelling across partner, friend, and family archetypes.
+* **Grapheme cluster safe typing:** Custom typewriter and kinetic text animations operate on Unicode grapheme clusters (preventing diacritic/matra character splits).
+
+---
+
+## 📂 5. WORKSPACE DIRECTORY STRUCTURE
+```
+birthday-bloom/
+├── .env.example                # Exhaustive 53 environment variables template
+├── ENV_GUIDE.md                # Master environment customization reference & recipes
+├── README.md                   # Project introduction and video guides
+├── CHANGELOG.md                # Version history
+├── LICENSE                     # MIT License
+├── llm.txt                     # AI-friendly root developer map
+├── public/                     # Public static assets (favicons, sitemaps, robots.txt, llms.txt, llms-full.txt)
+│   ├── llms.txt                # Standard llmstxt.org entry point
+│   ├── llms-full.txt           # Comprehensive LLM reference specification
+│   ├── robots.txt              # Search, Social & AI crawler rules
+│   ├── sitemap.xml             # Multilingual XML sitemap with hreflang
+│   └── site.webmanifest        # PWA web manifest with shortcuts
+└── src/                        # Source Code
+    ├── components/
+    │   ├── birthday/           # Interactive celebration scene components
+    │   │   ├── SplashScreen.tsx       # Tap-to-begin welcome screen & audio unlock
+    │   │   ├── PasswordUnlock.tsx     # Security lock screen with date format hints
+    │   │   ├── CinematicIntro.tsx     # Cinematic typewriter & message storyline
+    │   │   ├── CakeCutting.tsx        # 2D/3D composite cake cutting with reduced motion support
+    │   │   ├── Cake3D.tsx             # Three.js / R3F procedural 3D cake model
+    │   │   ├── CakeVisuals.tsx        # 2D celebration particle overlays (CutSparks and MagicDust)
+    │   │   ├── CakeKnife.tsx          # Interactive slicing knife gesture tracker
+    │   │   ├── BirthdayQuiz.tsx       # Interactive trivia quiz with score counters
+    │   │   ├── HeartTree.tsx          # SVG physics balloon merges & grand finale tree
+    │   │   ├── PhotoGallery.tsx       # Polaroid slider gallery grid
+    │   │   ├── VideoGallery.tsx       # Video memories carousel
+    │   │   ├── FinalSurprise.tsx      # Final gift reveal & special wishes
+    │   │   ├── ShareCelebrationModal.tsx # Viral social sharing & link generator
+    │   │   ├── PremiumFireworks.tsx   # HTML5 Canvas 2D celebratory fireworks
+    │   │   ├── SparkleRain.tsx        # Falling sparkle canvas field
+    │   │   ├── FireflyEffect.tsx      # Glowing organic fireflies
+    │   │   ├── ShootingStars.tsx      # Streaking star trails
+    │   │   ├── EmojiCursorTrail.tsx   # Reactive cursor emoji particles
+    │   │   ├── Balloons.tsx           # Floating interactive pop balloons
+    │   │   ├── Confetti.tsx           # Multi-cannon confetti bursts
+    │   │   ├── SoundManager.tsx       # Singleton Web Audio manager
+    │   │   └── MainBirthday.tsx       # Main celebration stage orchestration
+    │   └── ui/                     # Sonner, Tooltip primitives
+    ├── config/                     # Audio assets, templates, emoji kits
+    ├── features/
+    │   └── core/
+    │       ├── seo/
+    │       │   └── useDynamicSEO.ts   # Dynamic head meta & schema synchronization
+    │       ├── store/
+    │       │   ├── useBirthdayStore.ts # Central Zustand store
+    │       │   └── urlParams.ts       # URL search parameter engine
+    │       └── theme/
+    │           └── useDynamicTheme.ts # Dynamic HSL CSS variable injection
+    ├── i18n/                       # Localization dictionaries (en, bn, hi, fr)
+    └── pages/
+        ├── Index.tsx               # Main celebration state machine
+        └── NotFound.tsx            # 404 page
+```

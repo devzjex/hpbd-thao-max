@@ -1,0 +1,83 @@
+---
+tags: [templates, architecture, models]
+aliases: [template-architecture]
+---
+
+# Template Architecture
+
+Birthday Bloom templates are data-first. Env values hydrate the app store, the store drives components, and family templates provide typed relationship profiles.
+
+Repo: [naborajs/birthday-bloom](https://github.com/naborajs/birthday-bloom)
+
+## Data Flow
+
+```text
+.env.local
+  -> import.meta.env
+  -> useBirthdayStore
+  -> dynamic theme and birthday components
+  -> optional FamilyMemberProfile schema
+```
+
+## Key Files
+
+| File | Why It Exists |
+| --- | --- |
+| `src/features/core/store/useBirthdayStore.ts` | Parses 53 env values & aliases and exposes runtime `BirthdayConfig`. |
+| `src/features/core/models/familyTemplates.ts` | Defines 14 reusable family member templates, registry, and factories. |
+| `src/config/birthday.ts` | Keeps backward-compatible photo/audio env fallbacks. |
+| `src/config/templates.ts` | Cultural emotional letters, quotes, and tone presets. |
+| `src/components/birthday/*` | Renders the 29 active cinematic sections using store config. |
+
+## Inheritance Model
+
+Every family profile uses:
+
+```ts
+BaseFamilyMemberProfile & { specialized: RelationshipSpecificFields }
+```
+
+This means shared sections are stable and only relationship-specific details vary.
+
+Examples:
+
+- `BrotherProfile` extends `BaseFamilyMemberProfile` with `SiblingFields`.
+- `FatherProfile` extends `BaseFamilyMemberProfile` with `ParentFields`.
+- `CustomMemberProfile` extends `BaseFamilyMemberProfile` with `CustomMemberFields`.
+
+## Overrides
+
+Use `createFamilyMemberProfile(type, name, dob, options)` to override:
+
+- `preferredName`
+- `nicknames`
+- `gender`
+- `ageGroup`
+- `relationshipOverrides`
+- `dynamicFields`
+- `privacy`
+- `specialized`
+
+## Versioning
+
+`FAMILY_TEMPLATE_VERSION` marks the persisted family schema version. Bump it when a saved profile would need migration.
+
+Backward-compatible exports are preserved:
+
+- `createDefaultBrotherProfile()`
+- `createDefaultSisterProfile()`
+
+New specialized factories are also available for parents, grandparents, relatives, children, guardians, and friends.
+
+---
+
+## See Also
+
+- [[family-system|docs/family-system.md]] — Family template reference
+- [[ENV_GUIDE|docs/ENV_GUIDE.md]] — Env configuration for templates
+- [[developer-guide|docs/developer-guide.md]] — Developer extension patterns
+- [[./ARCHITECTURE|ARCHITECTURE.md]] — System architecture overview
+- [[./QUICK_START|QUICK_START.md]] — Getting started
+
+
+#obsidian #documentation #birthday-bloom #vault
