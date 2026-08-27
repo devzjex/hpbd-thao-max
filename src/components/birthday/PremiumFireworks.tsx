@@ -171,7 +171,12 @@ export const PremiumFireworks = ({ runKey }: PremiumFireworksProps) => {
         const draw = (time: number) => {
             const delta = Math.min(32, time - lastTime) / 16.67;
             lastTime = time;
-            context.globalCompositeOperation = "source-over";
+            // Fade the previous frame by subtracting alpha rather than painting black
+            // over it. A black fill only looked transparent because of the old
+            // `mix-blend-screen`; without that blend it stacks up into an opaque
+            // sheet that hides the page. `destination-out` decays the existing
+            // pixels' alpha instead, so the canvas stays genuinely see-through.
+            context.globalCompositeOperation = "destination-out";
             context.fillStyle = "rgba(0, 0, 0, 0.18)";
             context.fillRect(0, 0, window.innerWidth, window.innerHeight);
             context.globalCompositeOperation = "lighter";

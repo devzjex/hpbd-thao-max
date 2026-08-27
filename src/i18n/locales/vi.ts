@@ -60,7 +60,7 @@ export const viTranslations: TranslationSchema = {
         makeSomeNoise: "Quẩy lên nào! 🎉",
         maySmilesBrighten: "Mong nụ cười của {ban} thắp sáng cả năm ✨",
         cherishEveryDay: "Trân trọng từng kỷ niệm cùng {ban} 💖",
-        celebrateYou: "Hôm nay chúng ta mừng người tuyệt vời nhất mà chúng ta biết! 🌟",
+        celebrateYou: "Hôm nay chúng ta mừng sinh nhật người tuyệt vời nhất mà chúng ta biết! 🌟",
     },
     memories: {
         title: "KỶ NIỆM 📸",

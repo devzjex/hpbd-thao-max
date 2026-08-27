@@ -16,10 +16,21 @@ const isRealImageUrl = (url?: string): boolean => {
     return true;
 };
 
+/**
+ * One fixed shape for the carousel frame.
+ *
+ * The frame used to take its aspect ratio from whichever photo was showing, so a
+ * mixed set (portrait phone shots, a square, a landscape studio photo) made the
+ * whole panel jump between shapes on every slide. A single portrait ratio with
+ * `object-cover` keeps the frame still and crops each photo to fit instead.
+ */
+const FRAME_ASPECT = 4 / 5;
+/** Cap so a tall frame still fits a laptop screen; width follows from the ratio. */
+const FRAME_MAX_HEIGHT_VH = 78;
+
 export const PhotoGallery = () => {
     const [activeIndex, setActiveIndex] = useState(0);
     const [lightbox, setLightbox] = useState<number | null>(null);
-    const [photoRatios, setPhotoRatios] = useState<Record<string, number>>({});
     const [supportsTilt, setSupportsTilt] = useState(false);
     const [isReducedMotion, setIsReducedMotion] = useState(false);
     const isMobile = useIsMobile();
@@ -132,13 +143,6 @@ export const PhotoGallery = () => {
         y.set(0);
     };
 
-    const handleImageLoad = (key: string, e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-        const { naturalWidth, naturalHeight } = e.currentTarget;
-        if (naturalWidth && naturalHeight) {
-            setPhotoRatios((prev) => ({ ...prev, [key]: naturalWidth / naturalHeight }));
-        }
-    };
-
     useEffect(() => {
         if (typeof window === 'undefined')
             return;
@@ -222,8 +226,8 @@ export const PhotoGallery = () => {
 
         <motion.div onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ rotateX, rotateY, perspective: 1000 }} className={`relative group ${isMobile ? '' : 'cursor-none'}`}>
           <AnimatePresence mode="wait">
-            <motion.div key={activeIndex} initial={isMobile ? { opacity: 1, scale: 1, rotateY: 0, filter: "blur(0px)" } : { opacity: 0, scale: 0.9, rotateY: -15, filter: "blur(20px)" }} animate={{ opacity: 1, scale: 1, rotateY: 0, filter: "blur(0px)" }} exit={isMobile ? undefined : { opacity: 0, scale: 1.1, rotateY: 15, filter: "blur(20px)" }} transition={{ duration: transitionDuration, ease: [0.22, 1, 0.36, 1] }} style={{ aspectRatio: photoRatios[photos[activeIndex].key] ?? 16 / 9 }} className="relative rounded-[3rem] overflow-hidden shadow-[0_60px_120px_-20px_rgba(0,0,0,0.8)] border border-white/10" onClick={() => setLightbox(activeIndex)}>
-              <img src={photos[activeIndex].src} alt={photos[activeIndex].caption} onLoad={(e) => handleImageLoad(photos[activeIndex].key, e)} loading="lazy" className={`w-full h-full object-cover transition-transform [transition-duration:3000ms] ${!isMobile ? "group-hover:scale-110" : ""}`}/>
+            <motion.div key={activeIndex} initial={isMobile ? { opacity: 1, scale: 1, rotateY: 0, filter: "blur(0px)" } : { opacity: 0, scale: 0.9, rotateY: -15, filter: "blur(20px)" }} animate={{ opacity: 1, scale: 1, rotateY: 0, filter: "blur(0px)" }} exit={isMobile ? undefined : { opacity: 0, scale: 1.1, rotateY: 15, filter: "blur(20px)" }} transition={{ duration: transitionDuration, ease: [0.22, 1, 0.36, 1] }} style={{ aspectRatio: FRAME_ASPECT, width: `min(100%, ${FRAME_MAX_HEIGHT_VH * FRAME_ASPECT}vh)` }} className="relative mx-auto rounded-[3rem] overflow-hidden shadow-[0_60px_120px_-20px_rgba(0,0,0,0.8)] border border-white/10" onClick={() => setLightbox(activeIndex)}>
+              <img src={photos[activeIndex].src} alt={photos[activeIndex].caption} loading="lazy" className={`w-full h-full object-cover transition-transform [transition-duration:3000ms] ${!isMobile ? "group-hover:scale-110" : ""}`}/>
               <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"/>
               
               <div className="absolute bottom-0 inset-x-0 p-8 sm:p-16 text-center">
